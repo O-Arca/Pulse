@@ -4,11 +4,12 @@
 }
 .table_main
 {
-	 border:1px solid gray; 
-	 border-spacing:1px;
+	 border-collapse:collapse;
 	 font-size:12pt;
+	 text-align:center;
 }
 .table_main td
 {
 	padding:1px; 
+	border:1px solid gray; 
 }
