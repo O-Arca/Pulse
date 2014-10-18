@@ -1,0 +1,96 @@
+At first,there are 2 basic classes, that are  hardlybound together to implement some features.
+1. Char. - the main class
+2. Parameters. - describes parameters
+
+Char. options:
+[
+	1. name - describes name of character
+		string
+		base: none, input due construction
+	2. appearance - describes appearance
+		string (should be object)
+		base: none, input due construction
+	3. free_points - describes ammount of available character points
+		number (or maybe a string, representing number in future)
+		base: 0
+	4. parameters - describes character parameters. More information later.
+		Object
+		exemplar of class Parameters., described later 
+]
+
+Parameters. options:
+[
+	1. [strength, dextrity, constitution, mind, charisma, atack, defence, total_hp, will, regeneration, stamina] - all of them descrbes key-parameters
+		Object
+		keys:
+			[
+				1. type - describes type of parameter, not really helpful at this time
+					string
+					base:
+					[
+						[strength, dextrity, constitution, mind, charisma]: "base"
+						[atack, defence, base_hp, will, regeneration, stamina]: "secondary"
+						additonal parameters: "modula" - There is a basic way, to create additional parameters, this would be explain later. 
+					]
+				2. base cost - describes a price in points to gain 1(basicaly first, and sometimes every upper) level in this parameter. 
+					number
+					base:
+					[
+						[strength, dextrity, constitution, mind, charisma]: 10
+						[atack, defence, regeneration, perception]: 5
+						[will, stamina]: 2
+						base_hp: 3
+						additonal parameters: 5 - There is a basic way, to create additional parameters, this would be explain later.
+					]
+				3. total_points_cost() - it is a method, that calculate total points, spent in that parameter. It somehow flows from base_value. Logic is (or could be) different
+					method, returns number
+				4. modificator - maybe some kind of bonus
+					number
+					base: 0
+				5. bonus - another kind of bonus
+					number
+					base: 0
+				6. base_value - the level of parameter gained with poits or another way. Play in total_points_cost().
+					number
+					base: 0
+				7. value() - Method, that give the current value of parameter whith all bonuses and modificators. Could be somehow different for all parameters.
+					method, returns number
+			]
+]
+Parameters. methods:
+[
+
+]
+
+Char. methods:
+[
+	1. toString() - returns string, that somehow describes character
+		arguments: none
+		returns string
+	2. change_base_value(parameter,additional_value) - changes base value of parameter by some number. Does not touch bonuses and so on.
+		arguments:
+		[
+			1. parameter - which parameter to change
+				string
+				should be from list of existing parameters
+			2. additional_value - number to add.
+				number
+		]
+	3. add_bonus(parameter,additional_value) - the same, but changes bonus
+	4. add_modificator(parameter,additional_value) - about modificator
+	5. add_modula_parameter(parameter_name) - add additional parameter to list of all this character parameters. New parameter  come with 
+		type: "modula"
+		base: 0
+		base_cost: 5
+		modificator: 0
+		bonus: 0
+		base_value: 0
+		It has base .value() method, that summ bonus, modificator and base_value, and .total_points_cost() method, that returns all spend points by just counting simple progression depending on base_cost - price of every next level is previos price + first level price (5,10,15,30...), so 3rd lvl total is 30.
+		arguments:
+			parameter_name - represent the name of this parameter
+			string
+	6. add_body_part(part_name) - create new part of body (hand, tail, etc)
+		arguments:
+			part_name - represent kind of this body part
+			string
+]
