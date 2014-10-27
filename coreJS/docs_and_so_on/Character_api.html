@@ -1,3 +1,4 @@
+<template name="character_docs">
 At first,there are 2 basic classes, that are  hardlybound together to implement some features.
 1. Char. - the main class
 2. Parameters. - describes parameters
@@ -15,12 +16,15 @@ Char. options:
 		base: 0
 	4. parameters - describes character parameters. More information later.
 		Object
-		exemplar of class Parameters., described later 
+		exemplar of class Parameters., described later
+	5. effects
+	6. feats
+	7. skills 
 ]
 
 Parameters. options:
 [
-	1. [strength, dextrity, constitution, mind, charisma, atack, defence, total_hp, will, regeneration, stamina] - all of them descrbes key-parameters
+	1. [strength, dextrity, constitution, mind, charisma, atack, defence, total_hp, will, regeneration, stamina, visible_distance, atack_distance, ...] - all of them descrbes key-parameters
 		Object
 		keys:
 			[
@@ -30,6 +34,7 @@ Parameters. options:
 					[
 						[strength, dextrity, constitution, mind, charisma]: "base"
 						[atack, defence, base_hp, will, regeneration, stamina]: "secondary"
+						[visible_distance,atack_distance]: "helper" - this kind should not be available to buy
 						additonal parameters: "modula" - There is a basic way, to create additional parameters, this would be explain later. 
 					]
 				2. base cost - describes a price in points to gain 1(basicaly first, and sometimes every upper) level in this parameter. 
@@ -41,9 +46,11 @@ Parameters. options:
 						[will, stamina]: 2
 						base_hp: 3
 						additonal parameters: 5 - There is a basic way, to create additional parameters, this would be explain later.
+						for all parameters of type "helper" base_cost is set equal 2, but this is atavism
 					]
 				3. total_points_cost() - it is a method, that calculate total points, spent in that parameter. It somehow flows from base_value. Logic is (or could be) different
 					method, returns number
+					for parameters of type "helper" returns 0
 				4. modificator - maybe some kind of bonus
 					number
 					base: 0
@@ -89,8 +96,25 @@ Char. methods:
 		arguments:
 			parameter_name - represent the name of this parameter
 			string
-	6. add_body_part(part_name) - create new part of body (hand, tail, etc)
+	6. remove_modula_parameter(parameter_name) - delete pointed parameter. Works only with modula parameters.
+		arguments:
+			parameter_name - what parameter to delete
+			string
+	7. add_body_part(part_name) - create new part of body (hand, tail, etc)
 		arguments:
 			part_name - represent kind of this body part
 			string
+	8. remove_body_part(part_name) - delete pointed body part.
+		arguments:
+			part_name - which body part to delete
+			string
+	9. damage_body_part_hp(part_name,value) - add damage to bodypart. It works with property "damage" and does not modify hp direct.
+		arguments:
+			[
+				1. part_name - which bodypart to damage
+					string
+				2. value - value of damage
+					number
+			]
 ]
+</template>

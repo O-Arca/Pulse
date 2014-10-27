@@ -1,0 +1,7 @@
+Equipment = function(){
+	
+}
+
+Atom = function(){
+	
+}
